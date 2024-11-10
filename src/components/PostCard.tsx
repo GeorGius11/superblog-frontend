@@ -8,7 +8,7 @@ interface PostCardProps {
 const PostCard = ({ post }: PostCardProps) => {
   return (
     <div className="bg-gray rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-80">
-      <Link href={`/posts/${post.id}`}>
+      <Link href={`/posts/${post._id}`}>
         <img
           src="sample.png"
           alt={post.title}
