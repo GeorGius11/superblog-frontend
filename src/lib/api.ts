@@ -21,3 +21,18 @@ export const fetchPostById = async (id: string): Promise<Post> => {
   const response = await axios.get(`${BASE_URL}/posts/${id}`);
   return response.data;
 };
+
+export const deletePosts = async (ids: string[]): Promise<void> => {
+  const deletePromises = ids.map((id) =>
+    axios.delete(`${BASE_URL}/posts/${id}`)
+  );
+  await Promise.all(deletePromises);
+};
+
+export const updatePost = async (
+  id: string,
+  postData: Partial<Post>
+): Promise<Post> => {
+  const response = await axios.patch(`${BASE_URL}/posts/${id}`, postData);
+  return response.data;
+};
