@@ -35,19 +35,17 @@ export default function PostPage({ post }: PostPageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts: Post[] = await fetchPosts();
-
+  const { posts } = await fetchPosts(1, 10);
   const paths = posts.map((post) => ({
     params: { id: post._id },
   }));
 
-  return { paths, fallback: true };
+  return { paths, fallback: "blocking" };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const { id } = params!;
-
     const post = await fetchPostById(id as string);
 
     if (!post) {
