@@ -1,44 +1,11 @@
 import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Post } from "@/types/post";
+import { fetchPostById, fetchPosts } from "@/lib/api";
 
 interface PostPageProps {
   post?: Post;
 }
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/posts`);
-  const fetchedPosts = await data.json();
-  const posts: Post[] = fetchedPosts;
-
-  const paths = posts.map((post) => ({
-    params: { id: post._id },
-  }));
-
-  return { paths, fallback: true };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  try {
-    const { id } = params!;
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/posts/${id}`
-    );
-    const post = await res.json();
-
-    if (!post) {
-      return { notFound: true };
-    }
-
-    return {
-      props: { post },
-      revalidate: 10,
-    };
-  } catch (error) {
-    console.error("Error fetching post:", error);
-    return { notFound: true };
-  }
-};
 
 export default function PostPage({ post }: PostPageProps) {
   const router = useRouter();
@@ -66,3 +33,33 @@ export default function PostPage({ post }: PostPageProps) {
     </div>
   );
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts: Post[] = await fetchPosts();
+
+  const paths = posts.map((post) => ({
+    params: { id: post._id },
+  }));
+
+  return { paths, fallback: true };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  try {
+    const { id } = params!;
+
+    const post = await fetchPostById(id as string);
+
+    if (!post) {
+      return { notFound: true };
+    }
+
+    return {
+      props: { post },
+      revalidate: 10,
+    };
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    return { notFound: true };
+  }
+};

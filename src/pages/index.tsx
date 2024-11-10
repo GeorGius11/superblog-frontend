@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { Post } from "../types/post";
 import PostCard from "@/components/PostCard";
+import { fetchPosts } from "@/lib/api";
 
 const HomePage = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     const asyncWrapper = async () => {
-      const data = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/posts`);
-      const fetchedPosts = await data.json();
+      const fetchedPosts = await fetchPosts();
       setPosts(fetchedPosts);
     };
 
