@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { Post } from "@/types/post";
 import { fetchPostById, fetchPosts } from "@/lib/api";
 import Image from "next/image";
+import sampleImage from "/public/sample.png";
 
 interface PostPageProps {
   post?: Post;
@@ -19,13 +20,17 @@ export default function PostPage({ post }: PostPageProps) {
     return <p>Post not found</p>;
   }
 
+  const imageUrl = post.imageUrl
+    ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/${post.imageUrl}`
+    : sampleImage;
+
   return (
-    <div className="flex items-center flex-col mx-auto px-4 py-8 bg-gray-50 min-h-screen min-w-screen">
+    <div className="flex items-center flex-col mx-auto px-4 py-8 min-w-screen">
       <h1 className="text-2xl sm:text-4xl font-bold mb-4">{post.title}</h1>
       <div className="w-full max-w-2xl mx-auto mb-6">
         {post.imageUrl && (
           <Image
-            src="/sample.png"
+            src={imageUrl}
             alt={post.title}
             width={700}
             height={475}
@@ -34,8 +39,8 @@ export default function PostPage({ post }: PostPageProps) {
         )}
       </div>
       <div
-        className="prose min-w-screen bg-white rounded-lg p-6 shadow-md"
-        dangerouslySetInnerHTML={{ __html: post.content ?? "" }}
+        className="prose bg-white rounded-lg p-6 shadow-md"
+        dangerouslySetInnerHTML={{ __html: post.content || "" }}
       />
     </div>
   );
