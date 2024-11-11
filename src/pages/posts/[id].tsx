@@ -25,23 +25,29 @@ export default function PostPage({ post }: PostPageProps) {
     : sampleImage;
 
   return (
-    <div className="flex items-center flex-col mx-auto px-4 py-8 min-w-screen">
-      <h1 className="text-2xl sm:text-4xl font-bold mb-4">{post.title}</h1>
-      <div className="w-full max-w-2xl mx-auto mb-6">
-        {post.imageUrl && (
-          <Image
-            src={imageUrl}
-            alt={post.title}
-            width={700}
-            height={475}
-            className="rounded-lg shadow-md"
+    <div className="container mx-auto px-4 lg:px-0 py-8">
+      <h1 className="text-2xl sm:text-4xl font-bold mb-6 text-center">
+        {post.title}
+      </h1>
+      <div className="flex flex-col lg:flex-row lg:items-start lg:pt-8">
+        <div className="flex justify-center w-full lg:w-1/4 mt-6 lg:mt-0 lg:pr-16">
+          {post.imageUrl && (
+            <Image
+              src={imageUrl}
+              alt={post.title}
+              width={700}
+              height={475}
+              className="rounded-lg shadow-md"
+            />
+          )}
+        </div>
+        <div className="w-full pt-8 lg:w-3/4 lg:pt-0">
+          <div
+            className="prose max-w-none"
+            dangerouslySetInnerHTML={{ __html: post.content || "" }}
           />
-        )}
+        </div>
       </div>
-      <div
-        className="prose bg-white rounded-lg p-6 shadow-md"
-        dangerouslySetInnerHTML={{ __html: post.content || "" }}
-      />
     </div>
   );
 }
