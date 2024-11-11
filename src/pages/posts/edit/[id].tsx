@@ -63,6 +63,12 @@ export default function EditPostPage({ post }: EditPostPageProps) {
           className="w-full p-2 border rounded"
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          ref={(el) => {
+            if (el) {
+              el.style.height = "auto";
+              el.style.height = `${el.scrollHeight}px`;
+            }
+          }}
         ></textarea>
       </div>
       <button
