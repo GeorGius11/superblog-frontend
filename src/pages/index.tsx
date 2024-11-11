@@ -38,35 +38,37 @@ export default function HomePage({
           <PostCard key={post._id} post={post} />
         ))}
       </div>
-      <div className="flex justify-center mt-8">
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage <= 1}
-          className="px-4 py-2 mx-1 bg-gray-300 rounded"
-        >
-          Previous
-        </button>
-        {[...Array(pageCount)].map((_, index) => (
+      {pageCount > 1 && (
+        <div className="flex justify-center mt-8">
           <button
-            key={index}
-            onClick={() => handlePageChange(index + 1)}
-            className={`px-4 py-2 mx-1 rounded ${
-              currentPage === index + 1
-                ? "bg-blue-500 text-white"
-                : "bg-gray-300"
-            }`}
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage <= 1}
+            className="px-4 py-2 mx-1 bg-gray-300 rounded"
           >
-            {index + 1}
+            Previous
           </button>
-        ))}
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage >= pageCount}
-          className="px-4 py-2 mx-1 bg-gray-300 rounded"
-        >
-          Next
-        </button>
-      </div>
+          {[...Array(pageCount)].map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              className={`px-4 py-2 mx-1 rounded ${
+                currentPage === index + 1
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-300"
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage >= pageCount}
+            className="px-4 py-2 mx-1 bg-gray-300 rounded"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }
