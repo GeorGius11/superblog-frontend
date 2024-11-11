@@ -12,7 +12,7 @@ interface HomePageProps {
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const page = query.page ? parseInt(query.page as string) : 1;
-  const limit = 10;
+  const limit = 12;
   const { posts, pageCount } = await fetchPosts(page, limit);
 
   return {

@@ -47,7 +47,7 @@ export default function PostPage({ post }: PostPageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { posts } = await fetchPosts(1, 10);
+  const { posts } = await fetchPosts(1, 12);
   const paths = posts.map((post) => ({
     params: { id: post._id },
   }));
