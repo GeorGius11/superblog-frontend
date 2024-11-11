@@ -20,7 +20,7 @@ export default function EditPostPage({ post }: EditPostPageProps) {
     setLoading(true);
     try {
       await updatePost(post._id, { title, description, content, imageUrl });
-      router.push("/manage");
+      router.push("/posts/manage");
     } catch (error) {
       console.error("Error updating post:", error);
       alert("An error occurred while updating the post.");
