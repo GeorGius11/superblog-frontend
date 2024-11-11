@@ -87,63 +87,67 @@ export default function ManagePostsPage() {
         <p>Loading posts...</p>
       ) : (
         <>
-          <div className="mb-5">
-            <button
-              onClick={handleDeletePosts}
-              className="px-4 py-2 bg-red-500 text-white rounded"
-            >
-              Delete Selected
-            </button>
-          </div>
-          <table className="w-full table-auto border-collapse">
-            <thead>
-              <tr>
-                <th className="border p-2">
-                  <input
-                    type="checkbox"
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setSelectedPostIds(posts.map((post) => post._id));
-                      } else {
-                        setSelectedPostIds([]);
-                      }
-                    }}
-                    checked={selectedPostIds.length === posts.length}
-                  />
-                </th>
-                <th className="border p-2">Title</th>
-                <th className="border p-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {posts.map((post) => (
-                <tr key={post._id}>
-                  <td className="border p-2 text-center">
-                    <input
-                      type="checkbox"
-                      onChange={() => handleSelectPost(post._id)}
-                      checked={selectedPostIds.includes(post._id)}
-                    />
-                  </td>
-                  <td className="border p-2">{post.title}</td>
-                  <td className="flex justify-center border p-2">
-                    <button
-                      onClick={() => handleEditPost(post._id)}
-                      className="px-2 py-1 bg-blue-500 text-white rounded mr-2"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDeletePost(post._id)}
-                      className="px-2 py-1 bg-red-500 text-white rounded"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {posts.length > 0 && (
+            <>
+              <div className="mb-5">
+                <button
+                  onClick={handleDeletePosts}
+                  className="px-4 py-2 bg-red-500 text-white rounded"
+                >
+                  Delete Selected
+                </button>
+              </div>
+              <table className="w-full table-auto border-collapse">
+                <thead>
+                  <tr>
+                    <th className="border p-2">
+                      <input
+                        type="checkbox"
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedPostIds(posts.map((post) => post._id));
+                          } else {
+                            setSelectedPostIds([]);
+                          }
+                        }}
+                        checked={selectedPostIds.length === posts.length}
+                      />
+                    </th>
+                    <th className="border p-2">Title</th>
+                    <th className="border p-2">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {posts.map((post) => (
+                    <tr key={post._id}>
+                      <td className="border p-2 text-center">
+                        <input
+                          type="checkbox"
+                          onChange={() => handleSelectPost(post._id)}
+                          checked={selectedPostIds.includes(post._id)}
+                        />
+                      </td>
+                      <td className="border p-2">{post.title}</td>
+                      <td className="flex justify-center border p-2">
+                        <button
+                          onClick={() => handleEditPost(post._id)}
+                          className="px-2 py-1 bg-blue-500 text-white rounded mr-2"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDeletePost(post._id)}
+                          className="px-2 py-1 bg-red-500 text-white rounded"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          )}
         </>
       )}
     </div>
