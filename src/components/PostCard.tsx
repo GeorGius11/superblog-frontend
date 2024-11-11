@@ -13,15 +13,16 @@ const PostCard = ({ post }: PostCardProps) => {
     : sampleImage;
 
   return (
-    <div className="bg-gray rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 h-88">
+    <div className="bg-gray rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 w-100 h-88">
       <Link href={`/posts/${post._id}`}>
-        <Image
-          src={imageUrl}
-          alt={post.title}
-          width={360}
-          height={48}
-          className="w-full object-cover"
-        />
+        <div className="relative w-full h-48">
+          <Image
+            src={imageUrl}
+            alt={post.title}
+            fill
+            className="object-cover w-full h-full rounded-t-lg"
+          />
+        </div>
         <div className="p-4">
           <h2 className="text-xl font-semibold line-clamp-1">{post.title}</h2>
           <p className="mt-2 text-gray-800 line-clamp-2">{post.description}</p>
